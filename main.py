@@ -6,6 +6,13 @@ import subprocess
 import sys
 from importlib.util import find_spec
 from threading import Thread
+import sentry_sdk
+
+if os.environ.get('SENTRY_DSN'):
+    sentry_sdk.init(os.environ.get('SENTRY_DSN'))
+else:
+    print("SENTRY_DSN env is not defined. Continuing without Sentry...")
+
 
 from fooocus_api_version import version
 from fooocusapi.repositories_versions import fooocus_commit_hash

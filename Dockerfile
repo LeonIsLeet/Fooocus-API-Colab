@@ -12,7 +12,7 @@ ENV VIRTUAL_ENV=/opt/venv
 RUN virtualenv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-RUN pip install packaging
+RUN pip install packaging sentry-sdk
 
 WORKDIR /app
 
