@@ -11,6 +11,10 @@ from fooocusapi.task_queue import TaskType
 from fooocusapi.worker import process_generate, task_queue, process_top
 from concurrent.futures import ThreadPoolExecutor
 from fastapi.middleware.cors import CORSMiddleware
+# For public url
+import nest_asyncio
+from pyngrok import ngrok
+
 
 
 app = FastAPI()
@@ -199,6 +203,9 @@ app.mount("/files", StaticFiles(directory=file_utils.output_dir), name="files")
 
 
 def start_app(args):
+    ngrok_tunnel = ngrok.connect(args.port)
+    print('Public URL:', ngrok_tunnel.public_url)
+    nest_asyncio.apply()
     file_utils.static_serve_base_url = args.base_url + "/files/"
     uvicorn.run("fooocusapi.api:app", host=args.host,
                 port=args.port, log_level=args.log_level)
