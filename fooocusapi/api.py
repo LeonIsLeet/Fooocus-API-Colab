@@ -203,7 +203,7 @@ app.mount("/files", StaticFiles(directory=file_utils.output_dir), name="files")
 
 
 def start_app(args):
-    ngrok_tunnel = ngrok.connect(args.port)
+    ngrok_tunnel = ngrok.connect(args.port, bind_tls=True)
     print('Public URL:', ngrok_tunnel.public_url)
     print('Basic file serve url:' + ngrok_tunnel.public_url)
     nest_asyncio.apply()
