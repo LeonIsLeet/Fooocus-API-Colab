@@ -205,7 +205,8 @@ app.mount("/files", StaticFiles(directory=file_utils.output_dir), name="files")
 def start_app(args):
     ngrok_tunnel = ngrok.connect(args.port)
     print('Public URL:', ngrok_tunnel.public_url)
+    print('Basic file serve url:' + ngrok_tunnel.public_url)
     nest_asyncio.apply()
-    file_utils.static_serve_base_url = args.base_url + "/files/"
+    file_utils.static_serve_base_url = ngrok_tunnel.public_url + "/files/"
     uvicorn.run("fooocusapi.api:app", host=args.host,
                 port=args.port, log_level=args.log_level)
